@@ -1,5 +1,5 @@
 const test = "hello";
 
-function test  () {
+function testFunc  () {
             console.log('before format and lint');
 }
