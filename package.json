@@ -42,7 +42,7 @@
   },
   "lint-staged": {
     "{src|test}/**/*.js": [
-      "npm run lint:fix",
+      "prettier --write",
       "git add"
     ]
   },
