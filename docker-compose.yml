@@ -1,0 +1,33 @@
+version: "3.1"
+
+services:
+  mysqldb:
+    image: mysql:5.7.22
+    container_name: ans-db
+    restart: on-failure
+    tty: true
+    ports:
+      - "3306:3306"
+    volumes:
+      - container-volume:/var/lib/mysql
+      - ./config/mysql/dump.sql:/docker-entrypoint-initdb.d/dump.sql
+    environment:
+      MYSQL_DATABASE: ans_local
+      MYSQL_ROOT_PASSWORD: 12345678
+      MYSQL_USER: ans_local
+      MYSQL_PASSWORD: 12345678
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+  node-api:
+    build: node-api
+    container_name: ans-node
+    volumes:
+      - ./node-api:/var/app
+    ports:
+      - 5000:8080
+    tty: true
+    depends_on:
+      - mysqldb
+
+volumes: 
+  container-volume:
